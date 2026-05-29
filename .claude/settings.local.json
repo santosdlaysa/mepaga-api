@@ -8,7 +8,11 @@
       "Bash(ls:*)",
       "Bash(node:*)",
       "Bash(npm ls:*)",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "Bash(npm update:*)",
+      "Bash(claude:*)",
+      "Read(//c/Users/ldsantos/**)",
+      "Bash(npx create-expo-app@latest mepaga-app --template blank-typescript)"
     ]
   }
 }
