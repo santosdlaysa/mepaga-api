@@ -4,12 +4,12 @@ import { CreateExpenseInput } from "../../domain/entities/Expense";
 import { AppError } from "../../shared/errors/AppError";
 
 interface Input {
-  groupId: string;
-  paidBy: string;
+  groupId: number;
+  paidBy: number;
   amount: number;
   description: string;
   receiptUrl?: string;
-  splits: { userId: string; amountOwed: number }[];
+  splits: { userId: number; amountOwed: number }[];
 }
 
 export class CreateExpense {

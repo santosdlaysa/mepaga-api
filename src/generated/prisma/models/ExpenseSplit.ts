@@ -27,25 +27,31 @@ export type AggregateExpenseSplit = {
 }
 
 export type ExpenseSplitAvgAggregateOutputType = {
+  id: number | null
+  expenseId: number | null
+  userId: number | null
   amountOwed: runtime.Decimal | null
 }
 
 export type ExpenseSplitSumAggregateOutputType = {
+  id: number | null
+  expenseId: number | null
+  userId: number | null
   amountOwed: runtime.Decimal | null
 }
 
 export type ExpenseSplitMinAggregateOutputType = {
-  id: string | null
-  expenseId: string | null
-  userId: string | null
+  id: number | null
+  expenseId: number | null
+  userId: number | null
   amountOwed: runtime.Decimal | null
   createdAt: Date | null
 }
 
 export type ExpenseSplitMaxAggregateOutputType = {
-  id: string | null
-  expenseId: string | null
-  userId: string | null
+  id: number | null
+  expenseId: number | null
+  userId: number | null
   amountOwed: runtime.Decimal | null
   createdAt: Date | null
 }
@@ -61,10 +67,16 @@ export type ExpenseSplitCountAggregateOutputType = {
 
 
 export type ExpenseSplitAvgAggregateInputType = {
+  id?: true
+  expenseId?: true
+  userId?: true
   amountOwed?: true
 }
 
 export type ExpenseSplitSumAggregateInputType = {
+  id?: true
+  expenseId?: true
+  userId?: true
   amountOwed?: true
 }
 
@@ -180,9 +192,9 @@ export type ExpenseSplitGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 export type ExpenseSplitGroupByOutputType = {
-  id: string
-  expenseId: string
-  userId: string
+  id: number
+  expenseId: number
+  userId: number
   amountOwed: runtime.Decimal
   createdAt: Date
   _count: ExpenseSplitCountAggregateOutputType | null
@@ -211,9 +223,9 @@ export type ExpenseSplitWhereInput = {
   AND?: Prisma.ExpenseSplitWhereInput | Prisma.ExpenseSplitWhereInput[]
   OR?: Prisma.ExpenseSplitWhereInput[]
   NOT?: Prisma.ExpenseSplitWhereInput | Prisma.ExpenseSplitWhereInput[]
-  id?: Prisma.UuidFilter<"ExpenseSplit"> | string
-  expenseId?: Prisma.UuidFilter<"ExpenseSplit"> | string
-  userId?: Prisma.UuidFilter<"ExpenseSplit"> | string
+  id?: Prisma.IntFilter<"ExpenseSplit"> | number
+  expenseId?: Prisma.IntFilter<"ExpenseSplit"> | number
+  userId?: Prisma.IntFilter<"ExpenseSplit"> | number
   amountOwed?: Prisma.DecimalFilter<"ExpenseSplit"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"ExpenseSplit"> | Date | string
   expense?: Prisma.XOR<Prisma.ExpenseScalarRelationFilter, Prisma.ExpenseWhereInput>
@@ -231,12 +243,12 @@ export type ExpenseSplitOrderByWithRelationInput = {
 }
 
 export type ExpenseSplitWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   AND?: Prisma.ExpenseSplitWhereInput | Prisma.ExpenseSplitWhereInput[]
   OR?: Prisma.ExpenseSplitWhereInput[]
   NOT?: Prisma.ExpenseSplitWhereInput | Prisma.ExpenseSplitWhereInput[]
-  expenseId?: Prisma.UuidFilter<"ExpenseSplit"> | string
-  userId?: Prisma.UuidFilter<"ExpenseSplit"> | string
+  expenseId?: Prisma.IntFilter<"ExpenseSplit"> | number
+  userId?: Prisma.IntFilter<"ExpenseSplit"> | number
   amountOwed?: Prisma.DecimalFilter<"ExpenseSplit"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"ExpenseSplit"> | Date | string
   expense?: Prisma.XOR<Prisma.ExpenseScalarRelationFilter, Prisma.ExpenseWhereInput>
@@ -260,15 +272,14 @@ export type ExpenseSplitScalarWhereWithAggregatesInput = {
   AND?: Prisma.ExpenseSplitScalarWhereWithAggregatesInput | Prisma.ExpenseSplitScalarWhereWithAggregatesInput[]
   OR?: Prisma.ExpenseSplitScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ExpenseSplitScalarWhereWithAggregatesInput | Prisma.ExpenseSplitScalarWhereWithAggregatesInput[]
-  id?: Prisma.UuidWithAggregatesFilter<"ExpenseSplit"> | string
-  expenseId?: Prisma.UuidWithAggregatesFilter<"ExpenseSplit"> | string
-  userId?: Prisma.UuidWithAggregatesFilter<"ExpenseSplit"> | string
+  id?: Prisma.IntWithAggregatesFilter<"ExpenseSplit"> | number
+  expenseId?: Prisma.IntWithAggregatesFilter<"ExpenseSplit"> | number
+  userId?: Prisma.IntWithAggregatesFilter<"ExpenseSplit"> | number
   amountOwed?: Prisma.DecimalWithAggregatesFilter<"ExpenseSplit"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ExpenseSplit"> | Date | string
 }
 
 export type ExpenseSplitCreateInput = {
-  id?: string
   amountOwed: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   expense: Prisma.ExpenseCreateNestedOneWithoutSplitsInput
@@ -276,15 +287,14 @@ export type ExpenseSplitCreateInput = {
 }
 
 export type ExpenseSplitUncheckedCreateInput = {
-  id?: string
-  expenseId: string
-  userId: string
+  id?: number
+  expenseId: number
+  userId: number
   amountOwed: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
 }
 
 export type ExpenseSplitUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   amountOwed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expense?: Prisma.ExpenseUpdateOneRequiredWithoutSplitsNestedInput
@@ -292,31 +302,30 @@ export type ExpenseSplitUpdateInput = {
 }
 
 export type ExpenseSplitUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  expenseId?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  expenseId?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   amountOwed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ExpenseSplitCreateManyInput = {
-  id?: string
-  expenseId: string
-  userId: string
+  id?: number
+  expenseId: number
+  userId: number
   amountOwed: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
 }
 
 export type ExpenseSplitUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   amountOwed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ExpenseSplitUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  expenseId?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  expenseId?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   amountOwed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -340,6 +349,9 @@ export type ExpenseSplitCountOrderByAggregateInput = {
 }
 
 export type ExpenseSplitAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  expenseId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   amountOwed?: Prisma.SortOrder
 }
 
@@ -360,6 +372,9 @@ export type ExpenseSplitMinOrderByAggregateInput = {
 }
 
 export type ExpenseSplitSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  expenseId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   amountOwed?: Prisma.SortOrder
 }
 
@@ -448,15 +463,14 @@ export type ExpenseSplitUncheckedUpdateManyWithoutExpenseNestedInput = {
 }
 
 export type ExpenseSplitCreateWithoutUserInput = {
-  id?: string
   amountOwed: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   expense: Prisma.ExpenseCreateNestedOneWithoutSplitsInput
 }
 
 export type ExpenseSplitUncheckedCreateWithoutUserInput = {
-  id?: string
-  expenseId: string
+  id?: number
+  expenseId: number
   amountOwed: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
 }
@@ -491,23 +505,22 @@ export type ExpenseSplitScalarWhereInput = {
   AND?: Prisma.ExpenseSplitScalarWhereInput | Prisma.ExpenseSplitScalarWhereInput[]
   OR?: Prisma.ExpenseSplitScalarWhereInput[]
   NOT?: Prisma.ExpenseSplitScalarWhereInput | Prisma.ExpenseSplitScalarWhereInput[]
-  id?: Prisma.UuidFilter<"ExpenseSplit"> | string
-  expenseId?: Prisma.UuidFilter<"ExpenseSplit"> | string
-  userId?: Prisma.UuidFilter<"ExpenseSplit"> | string
+  id?: Prisma.IntFilter<"ExpenseSplit"> | number
+  expenseId?: Prisma.IntFilter<"ExpenseSplit"> | number
+  userId?: Prisma.IntFilter<"ExpenseSplit"> | number
   amountOwed?: Prisma.DecimalFilter<"ExpenseSplit"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"ExpenseSplit"> | Date | string
 }
 
 export type ExpenseSplitCreateWithoutExpenseInput = {
-  id?: string
   amountOwed: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutExpenseSplitsInput
 }
 
 export type ExpenseSplitUncheckedCreateWithoutExpenseInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   amountOwed: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
 }
@@ -539,57 +552,55 @@ export type ExpenseSplitUpdateManyWithWhereWithoutExpenseInput = {
 }
 
 export type ExpenseSplitCreateManyUserInput = {
-  id?: string
-  expenseId: string
+  id?: number
+  expenseId: number
   amountOwed: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
 }
 
 export type ExpenseSplitUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   amountOwed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expense?: Prisma.ExpenseUpdateOneRequiredWithoutSplitsNestedInput
 }
 
 export type ExpenseSplitUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  expenseId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  expenseId?: Prisma.IntFieldUpdateOperationsInput | number
   amountOwed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ExpenseSplitUncheckedUpdateManyWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  expenseId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  expenseId?: Prisma.IntFieldUpdateOperationsInput | number
   amountOwed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ExpenseSplitCreateManyExpenseInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   amountOwed: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
 }
 
 export type ExpenseSplitUpdateWithoutExpenseInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   amountOwed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutExpenseSplitsNestedInput
 }
 
 export type ExpenseSplitUncheckedUpdateWithoutExpenseInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   amountOwed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ExpenseSplitUncheckedUpdateManyWithoutExpenseInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   amountOwed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -655,9 +666,9 @@ export type $ExpenseSplitPayload<ExtArgs extends runtime.Types.Extensions.Intern
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    expenseId: string
-    userId: string
+    id: number
+    expenseId: number
+    userId: number
     amountOwed: runtime.Decimal
     createdAt: Date
   }, ExtArgs["result"]["expenseSplit"]>
@@ -1085,9 +1096,9 @@ export interface Prisma__ExpenseSplitClient<T, Null = never, ExtArgs extends run
  * Fields of the ExpenseSplit model
  */
 export interface ExpenseSplitFieldRefs {
-  readonly id: Prisma.FieldRef<"ExpenseSplit", 'String'>
-  readonly expenseId: Prisma.FieldRef<"ExpenseSplit", 'String'>
-  readonly userId: Prisma.FieldRef<"ExpenseSplit", 'String'>
+  readonly id: Prisma.FieldRef<"ExpenseSplit", 'Int'>
+  readonly expenseId: Prisma.FieldRef<"ExpenseSplit", 'Int'>
+  readonly userId: Prisma.FieldRef<"ExpenseSplit", 'Int'>
   readonly amountOwed: Prisma.FieldRef<"ExpenseSplit", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"ExpenseSplit", 'DateTime'>
 }

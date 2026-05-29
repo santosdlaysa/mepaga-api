@@ -7,6 +7,9 @@ import { PrismaExpenseRepository } from "./infrastructure/repositories/PrismaExp
 import { CreateGroup } from "./application/usecases/CreateGroup";
 import { JoinGroup } from "./application/usecases/JoinGroup";
 import { LinkAccount } from "./application/usecases/LinkAccount";
+import { Register } from "./application/usecases/Register";
+import { ForgotPassword } from "./application/usecases/ForgotPassword";
+import { ResetPassword } from "./application/usecases/ResetPassword";
 import { CreateExpense } from "./application/usecases/CreateExpense";
 import { GetGroupBalances } from "./application/usecases/GetGroupBalances";
 import { GroupController } from "./presentation/controllers/GroupController";
@@ -33,12 +36,15 @@ export async function buildApp() {
   const createGroup = new CreateGroup(groupRepo, userRepo);
   const joinGroup = new JoinGroup(groupRepo, userRepo);
   const linkAccount = new LinkAccount(userRepo);
+  const register = new Register(userRepo);
+  const forgotPassword = new ForgotPassword(userRepo);
+  const resetPassword = new ResetPassword(userRepo);
   const createExpense = new CreateExpense(expenseRepo, groupRepo);
 
   const getGroupBalances = new GetGroupBalances(
     expenseRepo,
     groupRepo,
-    async (groupId: string) => {
+    async (groupId: number) => {
       const members = await prisma.groupMember.findMany({
         where: { groupId },
         include: { user: true },
@@ -53,7 +59,7 @@ export async function buildApp() {
 
   // Controllers
   const groupController = new GroupController(createGroup, joinGroup);
-  const userController = new UserController(linkAccount);
+  const userController = new UserController(linkAccount, register, forgotPassword, resetPassword);
   const expenseController = new ExpenseController(createExpense);
   const balanceController = new BalanceController(getGroupBalances);
 

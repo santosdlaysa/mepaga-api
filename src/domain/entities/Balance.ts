@@ -1,18 +1,18 @@
 export interface IndividualBalance {
-  userId: string;
+  userId: number;
   name: string;
   netBalance: number;
 }
 
 export interface SimplifiedDebt {
-  from: { id: string; name: string };
-  to: { id: string; name: string; pixKey: string | null };
+  from: { id: number; name: string };
+  to: { id: number; name: string; pixKey: string | null };
   amount: number;
 }
 
 export interface GroupBalances {
-  groupId: string;
-  whoPayNext: string | null;
+  groupId: number;
+  whoPayNext: number | null;
   individualBalances: IndividualBalance[];
   simplifiedDebts: SimplifiedDebt[];
 }

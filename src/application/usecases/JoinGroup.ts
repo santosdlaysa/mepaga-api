@@ -6,11 +6,11 @@ import { AppError } from "../../shared/errors/AppError";
 interface Input {
   inviteToken: string;
   name: string;
-  userId?: string;
+  userId?: number;
 }
 
 interface Output {
-  groupId: string;
+  groupId: number;
   user: User;
 }
 

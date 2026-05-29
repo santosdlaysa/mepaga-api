@@ -20,12 +20,22 @@ export type GroupModel = runtime.Types.Result.DefaultSelection<Prisma.$GroupPayl
 
 export type AggregateGroup = {
   _count: GroupCountAggregateOutputType | null
+  _avg: GroupAvgAggregateOutputType | null
+  _sum: GroupSumAggregateOutputType | null
   _min: GroupMinAggregateOutputType | null
   _max: GroupMaxAggregateOutputType | null
 }
 
+export type GroupAvgAggregateOutputType = {
+  id: number | null
+}
+
+export type GroupSumAggregateOutputType = {
+  id: number | null
+}
+
 export type GroupMinAggregateOutputType = {
-  id: string | null
+  id: number | null
   name: string | null
   category: string | null
   inviteToken: string | null
@@ -33,7 +43,7 @@ export type GroupMinAggregateOutputType = {
 }
 
 export type GroupMaxAggregateOutputType = {
-  id: string | null
+  id: number | null
   name: string | null
   category: string | null
   inviteToken: string | null
@@ -49,6 +59,14 @@ export type GroupCountAggregateOutputType = {
   _all: number
 }
 
+
+export type GroupAvgAggregateInputType = {
+  id?: true
+}
+
+export type GroupSumAggregateInputType = {
+  id?: true
+}
 
 export type GroupMinAggregateInputType = {
   id?: true
@@ -113,6 +131,18 @@ export type GroupAggregateArgs<ExtArgs extends runtime.Types.Extensions.Internal
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: GroupAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: GroupSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: GroupMinAggregateInputType
@@ -143,17 +173,21 @@ export type GroupGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   _count?: GroupCountAggregateInputType | true
+  _avg?: GroupAvgAggregateInputType
+  _sum?: GroupSumAggregateInputType
   _min?: GroupMinAggregateInputType
   _max?: GroupMaxAggregateInputType
 }
 
 export type GroupGroupByOutputType = {
-  id: string
+  id: number
   name: string
   category: string
   inviteToken: string
   createdAt: Date
   _count: GroupCountAggregateOutputType | null
+  _avg: GroupAvgAggregateOutputType | null
+  _sum: GroupSumAggregateOutputType | null
   _min: GroupMinAggregateOutputType | null
   _max: GroupMaxAggregateOutputType | null
 }
@@ -177,7 +211,7 @@ export type GroupWhereInput = {
   AND?: Prisma.GroupWhereInput | Prisma.GroupWhereInput[]
   OR?: Prisma.GroupWhereInput[]
   NOT?: Prisma.GroupWhereInput | Prisma.GroupWhereInput[]
-  id?: Prisma.UuidFilter<"Group"> | string
+  id?: Prisma.IntFilter<"Group"> | number
   name?: Prisma.StringFilter<"Group"> | string
   category?: Prisma.StringFilter<"Group"> | string
   inviteToken?: Prisma.StringFilter<"Group"> | string
@@ -197,7 +231,7 @@ export type GroupOrderByWithRelationInput = {
 }
 
 export type GroupWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   inviteToken?: string
   AND?: Prisma.GroupWhereInput | Prisma.GroupWhereInput[]
   OR?: Prisma.GroupWhereInput[]
@@ -216,15 +250,17 @@ export type GroupOrderByWithAggregationInput = {
   inviteToken?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.GroupCountOrderByAggregateInput
+  _avg?: Prisma.GroupAvgOrderByAggregateInput
   _max?: Prisma.GroupMaxOrderByAggregateInput
   _min?: Prisma.GroupMinOrderByAggregateInput
+  _sum?: Prisma.GroupSumOrderByAggregateInput
 }
 
 export type GroupScalarWhereWithAggregatesInput = {
   AND?: Prisma.GroupScalarWhereWithAggregatesInput | Prisma.GroupScalarWhereWithAggregatesInput[]
   OR?: Prisma.GroupScalarWhereWithAggregatesInput[]
   NOT?: Prisma.GroupScalarWhereWithAggregatesInput | Prisma.GroupScalarWhereWithAggregatesInput[]
-  id?: Prisma.UuidWithAggregatesFilter<"Group"> | string
+  id?: Prisma.IntWithAggregatesFilter<"Group"> | number
   name?: Prisma.StringWithAggregatesFilter<"Group"> | string
   category?: Prisma.StringWithAggregatesFilter<"Group"> | string
   inviteToken?: Prisma.StringWithAggregatesFilter<"Group"> | string
@@ -232,7 +268,6 @@ export type GroupScalarWhereWithAggregatesInput = {
 }
 
 export type GroupCreateInput = {
-  id?: string
   name: string
   category: string
   inviteToken: string
@@ -242,7 +277,7 @@ export type GroupCreateInput = {
 }
 
 export type GroupUncheckedCreateInput = {
-  id?: string
+  id?: number
   name: string
   category: string
   inviteToken: string
@@ -252,7 +287,6 @@ export type GroupUncheckedCreateInput = {
 }
 
 export type GroupUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
@@ -262,7 +296,7 @@ export type GroupUpdateInput = {
 }
 
 export type GroupUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
@@ -272,7 +306,7 @@ export type GroupUncheckedUpdateInput = {
 }
 
 export type GroupCreateManyInput = {
-  id?: string
+  id?: number
   name: string
   category: string
   inviteToken: string
@@ -280,7 +314,6 @@ export type GroupCreateManyInput = {
 }
 
 export type GroupUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
@@ -288,7 +321,7 @@ export type GroupUpdateManyMutationInput = {
 }
 
 export type GroupUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
@@ -301,6 +334,10 @@ export type GroupCountOrderByAggregateInput = {
   category?: Prisma.SortOrder
   inviteToken?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+}
+
+export type GroupAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
 }
 
 export type GroupMaxOrderByAggregateInput = {
@@ -317,6 +354,10 @@ export type GroupMinOrderByAggregateInput = {
   category?: Prisma.SortOrder
   inviteToken?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+}
+
+export type GroupSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
 }
 
 export type GroupScalarRelationFilter = {
@@ -353,7 +394,6 @@ export type GroupUpdateOneRequiredWithoutExpensesNestedInput = {
 }
 
 export type GroupCreateWithoutMembersInput = {
-  id?: string
   name: string
   category: string
   inviteToken: string
@@ -362,7 +402,7 @@ export type GroupCreateWithoutMembersInput = {
 }
 
 export type GroupUncheckedCreateWithoutMembersInput = {
-  id?: string
+  id?: number
   name: string
   category: string
   inviteToken: string
@@ -387,7 +427,6 @@ export type GroupUpdateToOneWithWhereWithoutMembersInput = {
 }
 
 export type GroupUpdateWithoutMembersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
@@ -396,7 +435,7 @@ export type GroupUpdateWithoutMembersInput = {
 }
 
 export type GroupUncheckedUpdateWithoutMembersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
@@ -405,7 +444,6 @@ export type GroupUncheckedUpdateWithoutMembersInput = {
 }
 
 export type GroupCreateWithoutExpensesInput = {
-  id?: string
   name: string
   category: string
   inviteToken: string
@@ -414,7 +452,7 @@ export type GroupCreateWithoutExpensesInput = {
 }
 
 export type GroupUncheckedCreateWithoutExpensesInput = {
-  id?: string
+  id?: number
   name: string
   category: string
   inviteToken: string
@@ -439,7 +477,6 @@ export type GroupUpdateToOneWithWhereWithoutExpensesInput = {
 }
 
 export type GroupUpdateWithoutExpensesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
@@ -448,7 +485,7 @@ export type GroupUpdateWithoutExpensesInput = {
 }
 
 export type GroupUncheckedUpdateWithoutExpensesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
@@ -547,7 +584,7 @@ export type $GroupPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     expenses: Prisma.$ExpensePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
+    id: number
     name: string
     category: string
     inviteToken: string
@@ -977,7 +1014,7 @@ export interface Prisma__GroupClient<T, Null = never, ExtArgs extends runtime.Ty
  * Fields of the Group model
  */
 export interface GroupFieldRefs {
-  readonly id: Prisma.FieldRef<"Group", 'String'>
+  readonly id: Prisma.FieldRef<"Group", 'Int'>
   readonly name: Prisma.FieldRef<"Group", 'String'>
   readonly category: Prisma.FieldRef<"Group", 'String'>
   readonly inviteToken: Prisma.FieldRef<"Group", 'String'>

@@ -27,17 +27,23 @@ export type AggregateExpense = {
 }
 
 export type ExpenseAvgAggregateOutputType = {
+  id: number | null
+  groupId: number | null
+  paidByUserId: number | null
   amount: runtime.Decimal | null
 }
 
 export type ExpenseSumAggregateOutputType = {
+  id: number | null
+  groupId: number | null
+  paidByUserId: number | null
   amount: runtime.Decimal | null
 }
 
 export type ExpenseMinAggregateOutputType = {
-  id: string | null
-  groupId: string | null
-  paidByUserId: string | null
+  id: number | null
+  groupId: number | null
+  paidByUserId: number | null
   amount: runtime.Decimal | null
   description: string | null
   receiptUrl: string | null
@@ -45,9 +51,9 @@ export type ExpenseMinAggregateOutputType = {
 }
 
 export type ExpenseMaxAggregateOutputType = {
-  id: string | null
-  groupId: string | null
-  paidByUserId: string | null
+  id: number | null
+  groupId: number | null
+  paidByUserId: number | null
   amount: runtime.Decimal | null
   description: string | null
   receiptUrl: string | null
@@ -67,10 +73,16 @@ export type ExpenseCountAggregateOutputType = {
 
 
 export type ExpenseAvgAggregateInputType = {
+  id?: true
+  groupId?: true
+  paidByUserId?: true
   amount?: true
 }
 
 export type ExpenseSumAggregateInputType = {
+  id?: true
+  groupId?: true
+  paidByUserId?: true
   amount?: true
 }
 
@@ -192,9 +204,9 @@ export type ExpenseGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 export type ExpenseGroupByOutputType = {
-  id: string
-  groupId: string
-  paidByUserId: string
+  id: number
+  groupId: number
+  paidByUserId: number
   amount: runtime.Decimal
   description: string
   receiptUrl: string | null
@@ -225,9 +237,9 @@ export type ExpenseWhereInput = {
   AND?: Prisma.ExpenseWhereInput | Prisma.ExpenseWhereInput[]
   OR?: Prisma.ExpenseWhereInput[]
   NOT?: Prisma.ExpenseWhereInput | Prisma.ExpenseWhereInput[]
-  id?: Prisma.UuidFilter<"Expense"> | string
-  groupId?: Prisma.UuidFilter<"Expense"> | string
-  paidByUserId?: Prisma.UuidFilter<"Expense"> | string
+  id?: Prisma.IntFilter<"Expense"> | number
+  groupId?: Prisma.IntFilter<"Expense"> | number
+  paidByUserId?: Prisma.IntFilter<"Expense"> | number
   amount?: Prisma.DecimalFilter<"Expense"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringFilter<"Expense"> | string
   receiptUrl?: Prisma.StringNullableFilter<"Expense"> | string | null
@@ -251,12 +263,12 @@ export type ExpenseOrderByWithRelationInput = {
 }
 
 export type ExpenseWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   AND?: Prisma.ExpenseWhereInput | Prisma.ExpenseWhereInput[]
   OR?: Prisma.ExpenseWhereInput[]
   NOT?: Prisma.ExpenseWhereInput | Prisma.ExpenseWhereInput[]
-  groupId?: Prisma.UuidFilter<"Expense"> | string
-  paidByUserId?: Prisma.UuidFilter<"Expense"> | string
+  groupId?: Prisma.IntFilter<"Expense"> | number
+  paidByUserId?: Prisma.IntFilter<"Expense"> | number
   amount?: Prisma.DecimalFilter<"Expense"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringFilter<"Expense"> | string
   receiptUrl?: Prisma.StringNullableFilter<"Expense"> | string | null
@@ -285,9 +297,9 @@ export type ExpenseScalarWhereWithAggregatesInput = {
   AND?: Prisma.ExpenseScalarWhereWithAggregatesInput | Prisma.ExpenseScalarWhereWithAggregatesInput[]
   OR?: Prisma.ExpenseScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ExpenseScalarWhereWithAggregatesInput | Prisma.ExpenseScalarWhereWithAggregatesInput[]
-  id?: Prisma.UuidWithAggregatesFilter<"Expense"> | string
-  groupId?: Prisma.UuidWithAggregatesFilter<"Expense"> | string
-  paidByUserId?: Prisma.UuidWithAggregatesFilter<"Expense"> | string
+  id?: Prisma.IntWithAggregatesFilter<"Expense"> | number
+  groupId?: Prisma.IntWithAggregatesFilter<"Expense"> | number
+  paidByUserId?: Prisma.IntWithAggregatesFilter<"Expense"> | number
   amount?: Prisma.DecimalWithAggregatesFilter<"Expense"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringWithAggregatesFilter<"Expense"> | string
   receiptUrl?: Prisma.StringNullableWithAggregatesFilter<"Expense"> | string | null
@@ -295,7 +307,6 @@ export type ExpenseScalarWhereWithAggregatesInput = {
 }
 
 export type ExpenseCreateInput = {
-  id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description: string
   receiptUrl?: string | null
@@ -306,9 +317,9 @@ export type ExpenseCreateInput = {
 }
 
 export type ExpenseUncheckedCreateInput = {
-  id?: string
-  groupId: string
-  paidByUserId: string
+  id?: number
+  groupId: number
+  paidByUserId: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description: string
   receiptUrl?: string | null
@@ -317,7 +328,6 @@ export type ExpenseUncheckedCreateInput = {
 }
 
 export type ExpenseUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -328,9 +338,9 @@ export type ExpenseUpdateInput = {
 }
 
 export type ExpenseUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  groupId?: Prisma.StringFieldUpdateOperationsInput | string
-  paidByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  groupId?: Prisma.IntFieldUpdateOperationsInput | number
+  paidByUserId?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -339,9 +349,9 @@ export type ExpenseUncheckedUpdateInput = {
 }
 
 export type ExpenseCreateManyInput = {
-  id?: string
-  groupId: string
-  paidByUserId: string
+  id?: number
+  groupId: number
+  paidByUserId: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description: string
   receiptUrl?: string | null
@@ -349,7 +359,6 @@ export type ExpenseCreateManyInput = {
 }
 
 export type ExpenseUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -357,9 +366,9 @@ export type ExpenseUpdateManyMutationInput = {
 }
 
 export type ExpenseUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  groupId?: Prisma.StringFieldUpdateOperationsInput | string
-  paidByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  groupId?: Prisma.IntFieldUpdateOperationsInput | number
+  paidByUserId?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -387,6 +396,9 @@ export type ExpenseCountOrderByAggregateInput = {
 }
 
 export type ExpenseAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  groupId?: Prisma.SortOrder
+  paidByUserId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
 }
 
@@ -411,6 +423,9 @@ export type ExpenseMinOrderByAggregateInput = {
 }
 
 export type ExpenseSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  groupId?: Prisma.SortOrder
+  paidByUserId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
 }
 
@@ -526,7 +541,6 @@ export type ExpenseUpdateOneRequiredWithoutSplitsNestedInput = {
 }
 
 export type ExpenseCreateWithoutPaidByInput = {
-  id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description: string
   receiptUrl?: string | null
@@ -536,8 +550,8 @@ export type ExpenseCreateWithoutPaidByInput = {
 }
 
 export type ExpenseUncheckedCreateWithoutPaidByInput = {
-  id?: string
-  groupId: string
+  id?: number
+  groupId: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description: string
   receiptUrl?: string | null
@@ -575,9 +589,9 @@ export type ExpenseScalarWhereInput = {
   AND?: Prisma.ExpenseScalarWhereInput | Prisma.ExpenseScalarWhereInput[]
   OR?: Prisma.ExpenseScalarWhereInput[]
   NOT?: Prisma.ExpenseScalarWhereInput | Prisma.ExpenseScalarWhereInput[]
-  id?: Prisma.UuidFilter<"Expense"> | string
-  groupId?: Prisma.UuidFilter<"Expense"> | string
-  paidByUserId?: Prisma.UuidFilter<"Expense"> | string
+  id?: Prisma.IntFilter<"Expense"> | number
+  groupId?: Prisma.IntFilter<"Expense"> | number
+  paidByUserId?: Prisma.IntFilter<"Expense"> | number
   amount?: Prisma.DecimalFilter<"Expense"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringFilter<"Expense"> | string
   receiptUrl?: Prisma.StringNullableFilter<"Expense"> | string | null
@@ -585,7 +599,6 @@ export type ExpenseScalarWhereInput = {
 }
 
 export type ExpenseCreateWithoutGroupInput = {
-  id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description: string
   receiptUrl?: string | null
@@ -595,8 +608,8 @@ export type ExpenseCreateWithoutGroupInput = {
 }
 
 export type ExpenseUncheckedCreateWithoutGroupInput = {
-  id?: string
-  paidByUserId: string
+  id?: number
+  paidByUserId: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description: string
   receiptUrl?: string | null
@@ -631,7 +644,6 @@ export type ExpenseUpdateManyWithWhereWithoutGroupInput = {
 }
 
 export type ExpenseCreateWithoutSplitsInput = {
-  id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description: string
   receiptUrl?: string | null
@@ -641,9 +653,9 @@ export type ExpenseCreateWithoutSplitsInput = {
 }
 
 export type ExpenseUncheckedCreateWithoutSplitsInput = {
-  id?: string
-  groupId: string
-  paidByUserId: string
+  id?: number
+  groupId: number
+  paidByUserId: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description: string
   receiptUrl?: string | null
@@ -667,7 +679,6 @@ export type ExpenseUpdateToOneWithWhereWithoutSplitsInput = {
 }
 
 export type ExpenseUpdateWithoutSplitsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -677,9 +688,9 @@ export type ExpenseUpdateWithoutSplitsInput = {
 }
 
 export type ExpenseUncheckedUpdateWithoutSplitsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  groupId?: Prisma.StringFieldUpdateOperationsInput | string
-  paidByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  groupId?: Prisma.IntFieldUpdateOperationsInput | number
+  paidByUserId?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -687,8 +698,8 @@ export type ExpenseUncheckedUpdateWithoutSplitsInput = {
 }
 
 export type ExpenseCreateManyPaidByInput = {
-  id?: string
-  groupId: string
+  id?: number
+  groupId: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description: string
   receiptUrl?: string | null
@@ -696,7 +707,6 @@ export type ExpenseCreateManyPaidByInput = {
 }
 
 export type ExpenseUpdateWithoutPaidByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -706,8 +716,8 @@ export type ExpenseUpdateWithoutPaidByInput = {
 }
 
 export type ExpenseUncheckedUpdateWithoutPaidByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  groupId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  groupId?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -716,8 +726,8 @@ export type ExpenseUncheckedUpdateWithoutPaidByInput = {
 }
 
 export type ExpenseUncheckedUpdateManyWithoutPaidByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  groupId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  groupId?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -725,8 +735,8 @@ export type ExpenseUncheckedUpdateManyWithoutPaidByInput = {
 }
 
 export type ExpenseCreateManyGroupInput = {
-  id?: string
-  paidByUserId: string
+  id?: number
+  paidByUserId: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description: string
   receiptUrl?: string | null
@@ -734,7 +744,6 @@ export type ExpenseCreateManyGroupInput = {
 }
 
 export type ExpenseUpdateWithoutGroupInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -744,8 +753,8 @@ export type ExpenseUpdateWithoutGroupInput = {
 }
 
 export type ExpenseUncheckedUpdateWithoutGroupInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  paidByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  paidByUserId?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -754,8 +763,8 @@ export type ExpenseUncheckedUpdateWithoutGroupInput = {
 }
 
 export type ExpenseUncheckedUpdateManyWithoutGroupInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  paidByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  paidByUserId?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -865,9 +874,9 @@ export type $ExpensePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     splits: Prisma.$ExpenseSplitPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    groupId: string
-    paidByUserId: string
+    id: number
+    groupId: number
+    paidByUserId: number
     amount: runtime.Decimal
     description: string
     receiptUrl: string | null
@@ -1298,9 +1307,9 @@ export interface Prisma__ExpenseClient<T, Null = never, ExtArgs extends runtime.
  * Fields of the Expense model
  */
 export interface ExpenseFieldRefs {
-  readonly id: Prisma.FieldRef<"Expense", 'String'>
-  readonly groupId: Prisma.FieldRef<"Expense", 'String'>
-  readonly paidByUserId: Prisma.FieldRef<"Expense", 'String'>
+  readonly id: Prisma.FieldRef<"Expense", 'Int'>
+  readonly groupId: Prisma.FieldRef<"Expense", 'Int'>
+  readonly paidByUserId: Prisma.FieldRef<"Expense", 'Int'>
   readonly amount: Prisma.FieldRef<"Expense", 'Decimal'>
   readonly description: Prisma.FieldRef<"Expense", 'String'>
   readonly receiptUrl: Prisma.FieldRef<"Expense", 'String'>

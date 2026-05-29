@@ -4,7 +4,7 @@ import { GroupBalances, IndividualBalance, SimplifiedDebt } from "../../domain/e
 import { AppError } from "../../shared/errors/AppError";
 
 interface MemberInfo {
-  id: string;
+  id: number;
   name: string;
   pixKey: string | null;
 }
@@ -13,10 +13,10 @@ export class GetGroupBalances {
   constructor(
     private readonly expenseRepo: IExpenseRepository,
     private readonly groupRepo: IGroupRepository,
-    private readonly getMembersWithInfo: (groupId: string) => Promise<MemberInfo[]>
+    private readonly getMembersWithInfo: (groupId: number) => Promise<MemberInfo[]>
   ) {}
 
-  async execute(groupId: string): Promise<GroupBalances> {
+  async execute(groupId: number): Promise<GroupBalances> {
     const group = await this.groupRepo.findById(groupId);
     if (!group) {
       throw new AppError("Grupo não encontrado", 404);
@@ -26,7 +26,7 @@ export class GetGroupBalances {
     const members = await this.getMembersWithInfo(groupId);
 
     const memberMap = new Map(members.map((m) => [m.id, m]));
-    const balanceMap = new Map<string, number>();
+    const balanceMap = new Map<number, number>();
 
     for (const member of members) {
       balanceMap.set(member.id, 0);
@@ -69,10 +69,10 @@ export class GetGroupBalances {
 
   private simplifyDebts(
     balances: IndividualBalance[],
-    memberMap: Map<string, MemberInfo>
+    memberMap: Map<number, MemberInfo>
   ): SimplifiedDebt[] {
-    const debtors: { userId: string; amount: number }[] = [];
-    const creditors: { userId: string; amount: number }[] = [];
+    const debtors: { userId: number; amount: number }[] = [];
+    const creditors: { userId: number; amount: number }[] = [];
 
     for (const b of balances) {
       if (b.netBalance < -0.01) {

@@ -47,7 +47,7 @@ export class GroupController {
     const result = await this.joinGroup.execute({
       inviteToken: invite_token,
       name,
-      userId: user_id ?? undefined,
+      userId: user_id ? Number(user_id) : undefined,
     });
 
     return reply.status(200).send({

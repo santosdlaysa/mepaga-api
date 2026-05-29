@@ -3,7 +3,7 @@ import { User } from "../../domain/entities/User";
 import { AppError } from "../../shared/errors/AppError";
 
 interface Input {
-  userId: string;
+  userId: number;
   email: string;
 }
 

@@ -7,7 +7,7 @@ export class BalanceController {
   async get(request: FastifyRequest, reply: FastifyReply) {
     const { group_id } = request.params as { group_id: string };
 
-    const balances = await this.getGroupBalances.execute(group_id);
+    const balances = await this.getGroupBalances.execute(Number(group_id));
 
     return reply.status(200).send({
       group_id: balances.groupId,

@@ -8,11 +8,14 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid()) @db.Uuid
-  name      String   @db.VarChar(100)
-  email     String?  @unique @db.VarChar(255)
-  pixKey    String?  @map("pix_key") @db.VarChar(100)
-  createdAt DateTime @default(now()) @map("created_at")
+  id                  Int       @id @default(autoincrement())
+  name                String    @db.VarChar(100)
+  email               String?   @unique @db.VarChar(255)
+  passwordHash        String?   @map("password_hash") @db.VarChar(255)
+  pixKey              String?   @map("pix_key") @db.VarChar(100)
+  resetCode           String?   @map("reset_code") @db.VarChar(6)
+  resetCodeExpiresAt  DateTime? @map("reset_code_expires_at")
+  createdAt           DateTime  @default(now()) @map("created_at")
 
   groups        GroupMember[]
   paidExpenses  Expense[]
@@ -22,7 +25,7 @@ model User {
 }
 
 model Group {
-  id          String   @id @default(uuid()) @db.Uuid
+  id          Int      @id @default(autoincrement())
   name        String   @db.VarChar(100)
   category    String   @db.VarChar(50)
   inviteToken String   @unique @map("invite_token") @db.VarChar(100)
@@ -35,8 +38,8 @@ model Group {
 }
 
 model GroupMember {
-  groupId  String   @db.Uuid
-  userId   String   @db.Uuid
+  groupId  Int      @map("groupId")
+  userId   Int      @map("userId")
   joinedAt DateTime @default(now()) @map("joined_at")
 
   group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
@@ -47,9 +50,9 @@ model GroupMember {
 }
 
 model Expense {
-  id           String   @id @default(uuid()) @db.Uuid
-  groupId      String   @db.Uuid
-  paidByUserId String   @map("paid_by_user_id") @db.Uuid
+  id           Int      @id @default(autoincrement())
+  groupId      Int      @map("groupId")
+  paidByUserId Int      @map("paid_by_user_id")
   amount       Decimal  @db.Decimal(10, 2)
   description  String   @db.VarChar(255)
   receiptUrl   String?  @map("receipt_url")
@@ -63,9 +66,9 @@ model Expense {
 }
 
 model ExpenseSplit {
-  id         String   @id @default(uuid()) @db.Uuid
-  expenseId  String   @db.Uuid
-  userId     String   @db.Uuid
+  id         Int      @id @default(autoincrement())
+  expenseId  Int      @map("expenseId")
+  userId     Int      @map("userId")
   amountOwed Decimal  @map("amount_owed") @db.Decimal(10, 2)
   createdAt  DateTime @default(now()) @map("created_at")
 

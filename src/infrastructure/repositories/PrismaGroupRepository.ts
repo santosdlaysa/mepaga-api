@@ -15,7 +15,7 @@ export class PrismaGroupRepository implements IGroupRepository {
     });
   }
 
-  async findById(id: string): Promise<Group | null> {
+  async findById(id: number): Promise<Group | null> {
     return this.prisma.group.findUnique({ where: { id } });
   }
 
@@ -23,13 +23,13 @@ export class PrismaGroupRepository implements IGroupRepository {
     return this.prisma.group.findUnique({ where: { inviteToken: token } });
   }
 
-  async addMember(groupId: string, userId: string): Promise<void> {
+  async addMember(groupId: number, userId: number): Promise<void> {
     await this.prisma.groupMember.create({
       data: { groupId, userId },
     });
   }
 
-  async isMember(groupId: string, userId: string): Promise<boolean> {
+  async isMember(groupId: number, userId: number): Promise<boolean> {
     const member = await this.prisma.groupMember.findUnique({
       where: { groupId_userId: { groupId, userId } },
     });

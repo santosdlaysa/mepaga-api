@@ -38,7 +38,7 @@ export class PrismaExpenseRepository implements IExpenseRepository {
     };
   }
 
-  async findByGroupId(groupId: string): Promise<ExpenseWithSplits[]> {
+  async findByGroupId(groupId: number): Promise<ExpenseWithSplits[]> {
     const expenses = await this.prisma.expense.findMany({
       where: { groupId },
       include: { splits: true },

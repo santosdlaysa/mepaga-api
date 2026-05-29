@@ -15,13 +15,13 @@ export class ExpenseController {
     };
 
     const expense = await this.createExpense.execute({
-      groupId: group_id,
-      paidBy: paid_by,
+      groupId: Number(group_id),
+      paidBy: Number(paid_by),
       amount,
       description,
       receiptUrl: receipt_url,
       splits: splits.map((s) => ({
-        userId: s.user_id,
+        userId: Number(s.user_id),
         amountOwed: s.amount_owed,
       })),
     });

@@ -1,7 +1,7 @@
 export interface Expense {
-  id: string;
-  groupId: string;
-  paidByUserId: string;
+  id: number;
+  groupId: number;
+  paidByUserId: number;
   amount: number;
   description: string;
   receiptUrl: string | null;
@@ -9,13 +9,13 @@ export interface Expense {
 }
 
 export interface SplitInput {
-  userId: string;
+  userId: number;
   amountOwed: number;
 }
 
 export interface CreateExpenseInput {
-  groupId: string;
-  paidByUserId: string;
+  groupId: number;
+  paidByUserId: number;
   amount: number;
   description: string;
   receiptUrl?: string;

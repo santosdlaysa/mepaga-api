@@ -10,11 +10,13 @@ export class PrismaUserRepository implements IUserRepository {
       data: {
         name: input.name,
         email: input.email ?? null,
+        passwordHash: input.passwordHash ?? null,
+        pixKey: input.pixKey ?? null,
       },
     });
   }
 
-  async findById(id: string): Promise<User | null> {
+  async findById(id: number): Promise<User | null> {
     return this.prisma.user.findUnique({ where: { id } });
   }
 
@@ -22,10 +24,31 @@ export class PrismaUserRepository implements IUserRepository {
     return this.prisma.user.findUnique({ where: { email } });
   }
 
-  async updateEmail(userId: string, email: string): Promise<User> {
+  async updateEmail(userId: number, email: string): Promise<User> {
     return this.prisma.user.update({
       where: { id: userId },
       data: { email },
+    });
+  }
+
+  async setResetCode(userId: number, code: string, expiresAt: Date): Promise<User> {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: { resetCode: code, resetCodeExpiresAt: expiresAt },
+    });
+  }
+
+  async clearResetCode(userId: number): Promise<User> {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: { resetCode: null, resetCodeExpiresAt: null },
+    });
+  }
+
+  async updatePassword(userId: number, passwordHash: string): Promise<User> {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: { passwordHash, resetCode: null, resetCodeExpiresAt: null },
     });
   }
 }
