@@ -128,7 +128,70 @@ async function main() {
     assert(body.is_temporary === false, "Deveria nao ser temporario");
   });
 
-  // ─── 6. Forgot password ───
+  // ─── 6. Login ───
+  await test("POST /api/users/login — login com sucesso", async () => {
+    const res = await app.inject({
+      method: "POST",
+      url: "/api/users/login",
+      payload: { email: "maria.e2e@test.com", password: "senha123" },
+    });
+    assert(res.statusCode === 200, `Expected 200, got ${res.statusCode}`);
+    const body = JSON.parse(res.body);
+    assert(body.name === "Maria Teste", "Nome incorreto");
+    assert(body.email === "maria.e2e@test.com", "Email incorreto");
+    assert(typeof body.id === "number", "ID deve ser number");
+  });
+
+  // ─── 7. Login — senha errada ───
+  await test("POST /api/users/login — senha errada retorna 401", async () => {
+    const res = await app.inject({
+      method: "POST",
+      url: "/api/users/login",
+      payload: { email: "maria.e2e@test.com", password: "errada" },
+    });
+    assert(res.statusCode === 401, `Expected 401, got ${res.statusCode}`);
+  });
+
+  // ─── 8. User summary ───
+  await test("GET /api/users/:id/summary — retorna saldo", async () => {
+    // Pegar ID da Maria
+    const loginRes = await app.inject({
+      method: "POST",
+      url: "/api/users/login",
+      payload: { email: "maria.e2e@test.com", password: "senha123" },
+    });
+    const { id } = JSON.parse(loginRes.body);
+
+    const res = await app.inject({
+      method: "GET",
+      url: `/api/users/${id}/summary`,
+    });
+    assert(res.statusCode === 200, `Expected 200, got ${res.statusCode}`);
+    const body = JSON.parse(res.body);
+    assert(body.totalBalance === 0, "Balance deveria ser 0");
+    assert(body.name === "Maria Teste", "Nome incorreto");
+  });
+
+  // ─── 9. User groups ───
+  await test("GET /api/users/:id/groups — retorna grupos", async () => {
+    const loginRes = await app.inject({
+      method: "POST",
+      url: "/api/users/login",
+      payload: { email: "maria.e2e@test.com", password: "senha123" },
+    });
+    const { id } = JSON.parse(loginRes.body);
+
+    const res = await app.inject({
+      method: "GET",
+      url: `/api/users/${id}/groups`,
+    });
+    assert(res.statusCode === 200, `Expected 200, got ${res.statusCode}`);
+    const body = JSON.parse(res.body);
+    assert(Array.isArray(body.groups), "groups deve ser array");
+    assert(typeof body.settledCount === "number", "settledCount deve ser number");
+  });
+
+  // ─── 10. Forgot password ───
   await test("POST /api/users/forgot-password — envia codigo", async () => {
     // Criar usuario primeiro
     await app.inject({
