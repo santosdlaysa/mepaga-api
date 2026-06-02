@@ -9,10 +9,11 @@ export class GroupController {
   ) {}
 
   async create(request: FastifyRequest, reply: FastifyReply) {
-    const { name, category, creator_name } = request.body as {
+    const { name, category, creator_name, creator_id } = request.body as {
       name: string;
       category: string;
-      creator_name: string;
+      creator_name?: string;
+      creator_id?: number | string;
     };
 
     const appUrl = process.env.APP_URL ?? "http://localhost:3000";
@@ -20,6 +21,7 @@ export class GroupController {
       name,
       category,
       creatorName: creator_name,
+      creatorId: creator_id !== undefined ? Number(creator_id) : undefined,
     });
 
     return reply.status(201).send({
