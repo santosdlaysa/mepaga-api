@@ -12,6 +12,7 @@ export interface SimplifiedDebt {
 
 export interface GroupBalances {
   groupId: number;
+  total: number;
   whoPayNext: number | null;
   individualBalances: IndividualBalance[];
   simplifiedDebts: SimplifiedDebt[];

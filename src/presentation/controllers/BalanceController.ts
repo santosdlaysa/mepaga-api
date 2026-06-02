@@ -11,6 +11,7 @@ export class BalanceController {
 
     return reply.status(200).send({
       group_id: balances.groupId,
+      total: balances.total,
       who_pays_next: balances.whoPayNext,
       individual_balances: balances.individualBalances.map((b) => ({
         user_id: b.userId,

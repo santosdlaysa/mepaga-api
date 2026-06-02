@@ -25,6 +25,9 @@ export class GetGroupBalances {
     const expenses = await this.expenseRepo.findByGroupId(groupId);
     const members = await this.getMembersWithInfo(groupId);
 
+    const total =
+      Math.round(expenses.reduce((sum, e) => sum + e.amount, 0) * 100) / 100;
+
     const memberMap = new Map(members.map((m) => [m.id, m]));
     const balanceMap = new Map<number, number>();
 
@@ -61,6 +64,7 @@ export class GetGroupBalances {
 
     return {
       groupId,
+      total,
       whoPayNext: mostNegative && mostNegative.netBalance < 0 ? mostNegative.userId : null,
       individualBalances,
       simplifiedDebts,

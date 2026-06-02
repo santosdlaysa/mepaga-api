@@ -14,16 +14,19 @@ import { Login } from "./application/usecases/Login";
 import { GetUserGroups } from "./application/usecases/GetUserGroups";
 import { GetUserSummary } from "./application/usecases/GetUserSummary";
 import { GetUserActivities } from "./application/usecases/GetUserActivities";
+import { GetGroupActivities } from "./application/usecases/GetGroupActivities";
 import { CreateExpense } from "./application/usecases/CreateExpense";
 import { GetGroupBalances } from "./application/usecases/GetGroupBalances";
 import { GroupController } from "./presentation/controllers/GroupController";
 import { UserController } from "./presentation/controllers/UserController";
 import { ExpenseController } from "./presentation/controllers/ExpenseController";
 import { BalanceController } from "./presentation/controllers/BalanceController";
+import { ActivityController } from "./presentation/controllers/ActivityController";
 import { groupRoutes } from "./presentation/routes/groupRoutes";
 import { userRoutes } from "./presentation/routes/userRoutes";
 import { expenseRoutes } from "./presentation/routes/expenseRoutes";
 import { balanceRoutes } from "./presentation/routes/balanceRoutes";
+import { activityRoutes } from "./presentation/routes/activityRoutes";
 import { AppError } from "./shared/errors/AppError";
 
 export async function buildApp() {
@@ -127,6 +130,43 @@ export async function buildApp() {
     }
   );
 
+  const getGroupActivities = new GetGroupActivities(
+    groupRepo,
+    async (groupId: number, userId?: number) => {
+      const expenses = await prisma.expense.findMany({
+        where: { groupId },
+        include: {
+          paidBy: true,
+          group: true,
+          splits: userId ? { where: { userId } } : true,
+        },
+        orderBy: { createdAt: "desc" },
+        take: 20,
+      });
+      return expenses.map((e) => {
+        const initials = e.paidBy.name
+          .split(" ")
+          .map((w) => w[0])
+          .join("")
+          .slice(0, 2)
+          .toUpperCase();
+        const userOwes =
+          userId && e.splits.length > 0 ? Number(e.splits[0].amountOwed) : 0;
+        return {
+          id: e.id,
+          type: "expense" as const,
+          description: e.description,
+          amount: Number(e.amount),
+          paidByName: e.paidBy.name,
+          paidByInitials: initials,
+          groupName: e.group.name,
+          userOwes,
+          createdAt: e.createdAt.toISOString(),
+        };
+      });
+    }
+  );
+
   const createExpense = new CreateExpense(expenseRepo, groupRepo);
 
   const getGroupBalances = new GetGroupBalances(
@@ -153,12 +193,14 @@ export async function buildApp() {
   );
   const expenseController = new ExpenseController(createExpense);
   const balanceController = new BalanceController(getGroupBalances);
+  const activityController = new ActivityController(getGroupActivities);
 
   // Routes
   app.register(groupRoutes(groupController), { prefix: "/api/groups" });
   app.register(userRoutes(userController), { prefix: "/api/users" });
   app.register(expenseRoutes(expenseController), { prefix: "/api/groups" });
   app.register(balanceRoutes(balanceController), { prefix: "/api/groups" });
+  app.register(activityRoutes(activityController), { prefix: "/api/groups" });
 
   // Error handler
   app.setErrorHandler((error, _request, reply) => {
