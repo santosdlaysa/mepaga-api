@@ -13,6 +13,7 @@ export class PrismaExpenseRepository implements IExpenseRepository {
         amount: input.amount,
         description: input.description,
         receiptUrl: input.receiptUrl ?? null,
+        ...(input.createdAt ? { createdAt: input.createdAt } : {}),
         splits: {
           create: input.splits.map((split) => ({
             userId: split.userId,

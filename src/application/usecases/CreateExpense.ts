@@ -9,6 +9,7 @@ interface Input {
   amount: number;
   description: string;
   receiptUrl?: string;
+  date?: Date;
   splits: { userId: number; amountOwed: number }[];
 }
 
@@ -39,6 +40,7 @@ export class CreateExpense {
       amount: input.amount,
       description: input.description,
       receiptUrl: input.receiptUrl,
+      createdAt: input.date,
       splits: input.splits.map((s) => ({
         userId: s.userId,
         amountOwed: s.amountOwed,

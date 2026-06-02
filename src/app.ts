@@ -1,6 +1,9 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
+import multipart from "@fastify/multipart";
+import fastifyStatic from "@fastify/static";
 import { prisma } from "./infrastructure/database/prismaClient";
+import { UPLOADS_DIR, ensureUploadsDir } from "./shared/uploads";
 import { PrismaUserRepository } from "./infrastructure/repositories/PrismaUserRepository";
 import { PrismaGroupRepository } from "./infrastructure/repositories/PrismaGroupRepository";
 import { PrismaExpenseRepository } from "./infrastructure/repositories/PrismaExpenseRepository";
@@ -22,17 +25,29 @@ import { UserController } from "./presentation/controllers/UserController";
 import { ExpenseController } from "./presentation/controllers/ExpenseController";
 import { BalanceController } from "./presentation/controllers/BalanceController";
 import { ActivityController } from "./presentation/controllers/ActivityController";
+import { UploadController } from "./presentation/controllers/UploadController";
 import { groupRoutes } from "./presentation/routes/groupRoutes";
 import { userRoutes } from "./presentation/routes/userRoutes";
 import { expenseRoutes } from "./presentation/routes/expenseRoutes";
 import { balanceRoutes } from "./presentation/routes/balanceRoutes";
 import { activityRoutes } from "./presentation/routes/activityRoutes";
+import { uploadRoutes } from "./presentation/routes/uploadRoutes";
 import { AppError } from "./shared/errors/AppError";
 
 export async function buildApp() {
   const app = Fastify({ logger: true });
 
   await app.register(cors, { origin: true });
+
+  // Upload de comprovantes (multipart) + arquivos estáticos em /uploads
+  await app.register(multipart, {
+    limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB
+  });
+  ensureUploadsDir();
+  await app.register(fastifyStatic, {
+    root: UPLOADS_DIR,
+    prefix: "/uploads/",
+  });
 
   // Repositories
   const userRepo = new PrismaUserRepository(prisma);
@@ -194,6 +209,7 @@ export async function buildApp() {
   const expenseController = new ExpenseController(createExpense);
   const balanceController = new BalanceController(getGroupBalances);
   const activityController = new ActivityController(getGroupActivities);
+  const uploadController = new UploadController();
 
   // Routes
   app.register(groupRoutes(groupController), { prefix: "/api/groups" });
@@ -201,6 +217,7 @@ export async function buildApp() {
   app.register(expenseRoutes(expenseController), { prefix: "/api/groups" });
   app.register(balanceRoutes(balanceController), { prefix: "/api/groups" });
   app.register(activityRoutes(activityController), { prefix: "/api/groups" });
+  app.register(uploadRoutes(uploadController), { prefix: "/api/uploads" });
 
   // Error handler
   app.setErrorHandler((error, _request, reply) => {

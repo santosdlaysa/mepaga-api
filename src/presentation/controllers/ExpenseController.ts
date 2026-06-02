@@ -6,11 +6,12 @@ export class ExpenseController {
 
   async create(request: FastifyRequest, reply: FastifyReply) {
     const { group_id } = request.params as { group_id: string };
-    const { description, amount, paid_by, receipt_url, splits } = request.body as {
+    const { description, amount, paid_by, receipt_url, date, splits } = request.body as {
       description: string;
       amount: number;
       paid_by: string;
       receipt_url?: string;
+      date?: string;
       splits: { user_id: string; amount_owed: number }[];
     };
 
@@ -20,6 +21,7 @@ export class ExpenseController {
       amount,
       description,
       receiptUrl: receipt_url,
+      date: date ? new Date(date) : undefined,
       splits: splits.map((s) => ({
         userId: Number(s.user_id),
         amountOwed: s.amount_owed,

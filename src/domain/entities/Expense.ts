@@ -19,5 +19,6 @@ export interface CreateExpenseInput {
   amount: number;
   description: string;
   receiptUrl?: string;
+  createdAt?: Date;
   splits: SplitInput[];
 }
