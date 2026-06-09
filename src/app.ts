@@ -39,7 +39,10 @@ import { AppError } from "./shared/errors/AppError";
 export async function buildApp() {
   const app = Fastify({ logger: true });
 
-  await app.register(cors, { origin: true });
+  await app.register(cors, {
+    origin: true,
+    methods: ["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  });
 
   // Upload de comprovantes (multipart) + arquivos estáticos em /uploads
   await app.register(multipart, {
