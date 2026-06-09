@@ -31,6 +31,13 @@ export class PrismaUserRepository implements IUserRepository {
     });
   }
 
+  async updatePixKey(userId: number, pixKey: string | null): Promise<User> {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: { pixKey },
+    });
+  }
+
   async setResetCode(userId: number, code: string, expiresAt: Date): Promise<User> {
     return this.prisma.user.update({
       where: { id: userId },

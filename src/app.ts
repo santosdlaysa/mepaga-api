@@ -11,6 +11,7 @@ import { CreateGroup } from "./application/usecases/CreateGroup";
 import { JoinGroup } from "./application/usecases/JoinGroup";
 import { DeleteGroup } from "./application/usecases/DeleteGroup";
 import { LinkAccount } from "./application/usecases/LinkAccount";
+import { UpdatePixKey } from "./application/usecases/UpdatePixKey";
 import { Register } from "./application/usecases/Register";
 import { ForgotPassword } from "./application/usecases/ForgotPassword";
 import { ResetPassword } from "./application/usecases/ResetPassword";
@@ -60,6 +61,7 @@ export async function buildApp() {
   const joinGroup = new JoinGroup(groupRepo, userRepo);
   const deleteGroup = new DeleteGroup(groupRepo);
   const linkAccount = new LinkAccount(userRepo);
+  const updatePixKey = new UpdatePixKey(userRepo);
   const register = new Register(userRepo);
   const forgotPassword = new ForgotPassword(userRepo);
   const resetPassword = new ResetPassword(userRepo);
@@ -206,7 +208,7 @@ export async function buildApp() {
   const groupController = new GroupController(createGroup, joinGroup, deleteGroup);
   const userController = new UserController(
     linkAccount, register, forgotPassword, resetPassword,
-    login, getUserGroups, getUserSummary, getUserActivities
+    login, getUserGroups, getUserSummary, getUserActivities, updatePixKey
   );
   const expenseController = new ExpenseController(createExpense);
   const balanceController = new BalanceController(getGroupBalances);

@@ -5,6 +5,7 @@ export interface IUserRepository {
   findById(id: number): Promise<User | null>;
   findByEmail(email: string): Promise<User | null>;
   updateEmail(userId: number, email: string): Promise<User>;
+  updatePixKey(userId: number, pixKey: string | null): Promise<User>;
   setResetCode(userId: number, code: string, expiresAt: Date): Promise<User>;
   clearResetCode(userId: number): Promise<User>;
   updatePassword(userId: number, passwordHash: string): Promise<User>;

@@ -1,5 +1,6 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { LinkAccount } from "../../application/usecases/LinkAccount";
+import { UpdatePixKey } from "../../application/usecases/UpdatePixKey";
 import { Register } from "../../application/usecases/Register";
 import { ForgotPassword } from "../../application/usecases/ForgotPassword";
 import { ResetPassword } from "../../application/usecases/ResetPassword";
@@ -17,7 +18,8 @@ export class UserController {
     private readonly login: Login,
     private readonly getUserGroups: GetUserGroups,
     private readonly getUserSummary: GetUserSummary,
-    private readonly getUserActivities: GetUserActivities
+    private readonly getUserActivities: GetUserActivities,
+    private readonly updatePixKey: UpdatePixKey
   ) {}
 
   async link(request: FastifyRequest, reply: FastifyReply) {
@@ -43,6 +45,21 @@ export class UserController {
     };
     const user = await this.register.execute({ name, email, password, pixKey: pix_key });
     return reply.status(201).send({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      pix_key: user.pixKey,
+    });
+  }
+
+  async updatePix(request: FastifyRequest, reply: FastifyReply) {
+    const { id } = request.params as { id: string };
+    const { pix_key } = request.body as { pix_key: string | null };
+    const user = await this.updatePixKey.execute({
+      userId: Number(id),
+      pixKey: pix_key,
+    });
+    return reply.status(200).send({
       id: user.id,
       name: user.name,
       email: user.email,
