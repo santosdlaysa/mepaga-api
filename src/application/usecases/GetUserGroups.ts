@@ -9,6 +9,8 @@ interface GroupSummary {
   memberCount: number;
   createdByUserId: number | null;
   inviteToken: string;
+  // Saldo do usuário neste grupo: positivo = a receber, negativo = devendo.
+  netBalance: number;
 }
 
 interface Output {

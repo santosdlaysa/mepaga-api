@@ -84,6 +84,27 @@ export async function buildApp() {
           },
         },
       });
+
+      // Saldo do usuário por grupo, em uma única query: soma o que ele pagou e
+      // subtrai o que deve (splits). Evita uma chamada por grupo no cliente.
+      const groupIds = members.map((m) => m.group.id);
+      const expenses = await prisma.expense.findMany({
+        where: { groupId: { in: groupIds } },
+        select: {
+          groupId: true,
+          amount: true,
+          paidByUserId: true,
+          splits: { where: { userId }, select: { amountOwed: true } },
+        },
+      });
+      const balanceByGroup = new Map<number, number>();
+      for (const e of expenses) {
+        let balance = balanceByGroup.get(e.groupId) ?? 0;
+        if (e.paidByUserId === userId) balance += Number(e.amount);
+        for (const split of e.splits) balance -= Number(split.amountOwed);
+        balanceByGroup.set(e.groupId, balance);
+      }
+
       return members.map((m) => ({
         id: m.group.id,
         name: m.group.name,
@@ -91,6 +112,7 @@ export async function buildApp() {
         memberCount: m.group.members.length,
         createdByUserId: m.group.createdByUserId,
         inviteToken: m.group.inviteToken,
+        netBalance: Math.round((balanceByGroup.get(m.group.id) ?? 0) * 100) / 100,
       }));
     }
   );
