@@ -10,6 +10,7 @@ import { PrismaExpenseRepository } from "./infrastructure/repositories/PrismaExp
 import { CreateGroup } from "./application/usecases/CreateGroup";
 import { JoinGroup } from "./application/usecases/JoinGroup";
 import { DeleteGroup } from "./application/usecases/DeleteGroup";
+import { GetGroupByInvite } from "./application/usecases/GetGroupByInvite";
 import { LinkAccount } from "./application/usecases/LinkAccount";
 import { UpdatePixKey } from "./application/usecases/UpdatePixKey";
 import { Register } from "./application/usecases/Register";
@@ -63,6 +64,7 @@ export async function buildApp() {
   const createGroup = new CreateGroup(groupRepo, userRepo);
   const joinGroup = new JoinGroup(groupRepo, userRepo);
   const deleteGroup = new DeleteGroup(groupRepo);
+  const getGroupByInvite = new GetGroupByInvite(groupRepo);
   const linkAccount = new LinkAccount(userRepo);
   const updatePixKey = new UpdatePixKey(userRepo);
   const register = new Register(userRepo);
@@ -88,6 +90,7 @@ export async function buildApp() {
         category: m.group.category,
         memberCount: m.group.members.length,
         createdByUserId: m.group.createdByUserId,
+        inviteToken: m.group.inviteToken,
       }));
     }
   );
@@ -209,7 +212,7 @@ export async function buildApp() {
   );
 
   // Controllers
-  const groupController = new GroupController(createGroup, joinGroup, deleteGroup);
+  const groupController = new GroupController(createGroup, joinGroup, deleteGroup, getGroupByInvite);
   const userController = new UserController(
     linkAccount, register, forgotPassword, resetPassword,
     login, getUserGroups, getUserSummary, getUserActivities, updatePixKey

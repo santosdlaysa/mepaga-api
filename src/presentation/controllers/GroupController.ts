@@ -2,12 +2,14 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import { CreateGroup } from "../../application/usecases/CreateGroup";
 import { JoinGroup } from "../../application/usecases/JoinGroup";
 import { DeleteGroup } from "../../application/usecases/DeleteGroup";
+import { GetGroupByInvite } from "../../application/usecases/GetGroupByInvite";
 
 export class GroupController {
   constructor(
     private readonly createGroup: CreateGroup,
     private readonly joinGroup: JoinGroup,
-    private readonly deleteGroup: DeleteGroup
+    private readonly deleteGroup: DeleteGroup,
+    private readonly getGroupByInvite: GetGroupByInvite
   ) {}
 
   async create(request: FastifyRequest, reply: FastifyReply) {
@@ -31,6 +33,7 @@ export class GroupController {
         id: result.group.id,
         name: result.group.name,
         category: result.group.category,
+        invite_token: result.group.inviteToken,
         invite_url: `${appUrl}/invite/${result.group.inviteToken}`,
       },
       creator: {
@@ -38,6 +41,20 @@ export class GroupController {
         name: result.creator.name,
         is_temporary: result.creator.email === null,
       },
+    });
+  }
+
+  async getByInvite(request: FastifyRequest, reply: FastifyReply) {
+    const { token } = request.params as { token: string };
+
+    const group = await this.getGroupByInvite.execute({ inviteToken: token });
+
+    return reply.status(200).send({
+      id: group.id,
+      name: group.name,
+      category: group.category,
+      member_count: group.memberCount,
+      created_by_user_id: group.createdByUserId,
     });
   }
 

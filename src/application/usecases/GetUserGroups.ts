@@ -8,6 +8,7 @@ interface GroupSummary {
   category: string;
   memberCount: number;
   createdByUserId: number | null;
+  inviteToken: string;
 }
 
 interface Output {

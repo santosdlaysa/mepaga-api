@@ -39,6 +39,10 @@ export class PrismaGroupRepository implements IGroupRepository {
     return member !== null;
   }
 
+  async countMembers(groupId: number): Promise<number> {
+    return this.prisma.groupMember.count({ where: { groupId } });
+  }
+
   async delete(id: number): Promise<void> {
     // Membros, despesas e divisões são removidos em cascata (onDelete: Cascade).
     await this.prisma.group.delete({ where: { id } });
