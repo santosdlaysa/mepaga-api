@@ -84,6 +84,7 @@ export async function buildApp() {
         name: m.group.name,
         category: m.group.category,
         memberCount: m.group.members.length,
+        createdByUserId: m.group.createdByUserId,
       }));
     }
   );

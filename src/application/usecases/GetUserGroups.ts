@@ -7,6 +7,7 @@ interface GroupSummary {
   name: string;
   category: string;
   memberCount: number;
+  createdByUserId: number | null;
 }
 
 interface Output {
