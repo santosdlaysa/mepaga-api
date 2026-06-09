@@ -18,6 +18,7 @@ model User {
   createdAt           DateTime  @default(now()) @map("created_at")
 
   groups        GroupMember[]
+  createdGroups Group[]        @relation("GroupCreator")
   paidExpenses  Expense[]
   expenseSplits ExpenseSplit[]
 
@@ -25,14 +26,16 @@ model User {
 }
 
 model Group {
-  id          Int      @id @default(autoincrement())
-  name        String   @db.VarChar(100)
-  category    String   @db.VarChar(50)
-  inviteToken String   @unique @map("invite_token") @db.VarChar(100)
-  createdAt   DateTime @default(now()) @map("created_at")
+  id              Int      @id @default(autoincrement())
+  name            String   @db.VarChar(100)
+  category        String   @db.VarChar(50)
+  inviteToken     String   @unique @map("invite_token") @db.VarChar(100)
+  createdByUserId Int?     @map("created_by_user_id")
+  createdAt       DateTime @default(now()) @map("created_at")
 
-  members  GroupMember[]
-  expenses Expense[]
+  createdBy User?         @relation("GroupCreator", fields: [createdByUserId], references: [id])
+  members   GroupMember[]
+  expenses  Expense[]
 
   @@map("groups")
 }

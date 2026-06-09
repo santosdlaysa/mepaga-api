@@ -9,6 +9,7 @@ import { PrismaGroupRepository } from "./infrastructure/repositories/PrismaGroup
 import { PrismaExpenseRepository } from "./infrastructure/repositories/PrismaExpenseRepository";
 import { CreateGroup } from "./application/usecases/CreateGroup";
 import { JoinGroup } from "./application/usecases/JoinGroup";
+import { DeleteGroup } from "./application/usecases/DeleteGroup";
 import { LinkAccount } from "./application/usecases/LinkAccount";
 import { Register } from "./application/usecases/Register";
 import { ForgotPassword } from "./application/usecases/ForgotPassword";
@@ -57,6 +58,7 @@ export async function buildApp() {
   // Use Cases
   const createGroup = new CreateGroup(groupRepo, userRepo);
   const joinGroup = new JoinGroup(groupRepo, userRepo);
+  const deleteGroup = new DeleteGroup(groupRepo);
   const linkAccount = new LinkAccount(userRepo);
   const register = new Register(userRepo);
   const forgotPassword = new ForgotPassword(userRepo);
@@ -201,7 +203,7 @@ export async function buildApp() {
   );
 
   // Controllers
-  const groupController = new GroupController(createGroup, joinGroup);
+  const groupController = new GroupController(createGroup, joinGroup, deleteGroup);
   const userController = new UserController(
     linkAccount, register, forgotPassword, resetPassword,
     login, getUserGroups, getUserSummary, getUserActivities

@@ -44,6 +44,7 @@ export class CreateGroup {
       name: input.name,
       category: input.category,
       inviteToken,
+      createdByUserId: creator.id,
     });
 
     await this.groupRepo.addMember(group.id, creator.id);

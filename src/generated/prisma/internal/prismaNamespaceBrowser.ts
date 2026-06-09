@@ -93,6 +93,7 @@ export const GroupScalarFieldEnum = {
   name: 'name',
   category: 'category',
   inviteToken: 'inviteToken',
+  createdByUserId: 'createdByUserId',
   createdAt: 'createdAt'
 } as const
 

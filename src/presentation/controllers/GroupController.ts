@@ -1,11 +1,13 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { CreateGroup } from "../../application/usecases/CreateGroup";
 import { JoinGroup } from "../../application/usecases/JoinGroup";
+import { DeleteGroup } from "../../application/usecases/DeleteGroup";
 
 export class GroupController {
   constructor(
     private readonly createGroup: CreateGroup,
-    private readonly joinGroup: JoinGroup
+    private readonly joinGroup: JoinGroup,
+    private readonly deleteGroup: DeleteGroup
   ) {}
 
   async create(request: FastifyRequest, reply: FastifyReply) {
@@ -60,5 +62,21 @@ export class GroupController {
         is_temporary: result.user.email === null,
       },
     });
+  }
+
+  async delete(request: FastifyRequest, reply: FastifyReply) {
+    const { group_id } = request.params as { group_id: string };
+    const { user_id } = request.query as { user_id?: string };
+
+    if (!user_id) {
+      return reply.status(400).send({ error: "user_id e obrigatorio" });
+    }
+
+    await this.deleteGroup.execute({
+      groupId: Number(group_id),
+      requesterId: Number(user_id),
+    });
+
+    return reply.status(204).send();
   }
 }

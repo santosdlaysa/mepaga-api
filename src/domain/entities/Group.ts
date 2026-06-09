@@ -3,6 +3,7 @@ export interface Group {
   name: string;
   category: string;
   inviteToken: string;
+  createdByUserId: number | null;
   createdAt: Date;
 }
 

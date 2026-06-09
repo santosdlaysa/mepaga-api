@@ -28,10 +28,12 @@ export type AggregateGroup = {
 
 export type GroupAvgAggregateOutputType = {
   id: number | null
+  createdByUserId: number | null
 }
 
 export type GroupSumAggregateOutputType = {
   id: number | null
+  createdByUserId: number | null
 }
 
 export type GroupMinAggregateOutputType = {
@@ -39,6 +41,7 @@ export type GroupMinAggregateOutputType = {
   name: string | null
   category: string | null
   inviteToken: string | null
+  createdByUserId: number | null
   createdAt: Date | null
 }
 
@@ -47,6 +50,7 @@ export type GroupMaxAggregateOutputType = {
   name: string | null
   category: string | null
   inviteToken: string | null
+  createdByUserId: number | null
   createdAt: Date | null
 }
 
@@ -55,6 +59,7 @@ export type GroupCountAggregateOutputType = {
   name: number
   category: number
   inviteToken: number
+  createdByUserId: number
   createdAt: number
   _all: number
 }
@@ -62,10 +67,12 @@ export type GroupCountAggregateOutputType = {
 
 export type GroupAvgAggregateInputType = {
   id?: true
+  createdByUserId?: true
 }
 
 export type GroupSumAggregateInputType = {
   id?: true
+  createdByUserId?: true
 }
 
 export type GroupMinAggregateInputType = {
@@ -73,6 +80,7 @@ export type GroupMinAggregateInputType = {
   name?: true
   category?: true
   inviteToken?: true
+  createdByUserId?: true
   createdAt?: true
 }
 
@@ -81,6 +89,7 @@ export type GroupMaxAggregateInputType = {
   name?: true
   category?: true
   inviteToken?: true
+  createdByUserId?: true
   createdAt?: true
 }
 
@@ -89,6 +98,7 @@ export type GroupCountAggregateInputType = {
   name?: true
   category?: true
   inviteToken?: true
+  createdByUserId?: true
   createdAt?: true
   _all?: true
 }
@@ -184,6 +194,7 @@ export type GroupGroupByOutputType = {
   name: string
   category: string
   inviteToken: string
+  createdByUserId: number | null
   createdAt: Date
   _count: GroupCountAggregateOutputType | null
   _avg: GroupAvgAggregateOutputType | null
@@ -215,7 +226,9 @@ export type GroupWhereInput = {
   name?: Prisma.StringFilter<"Group"> | string
   category?: Prisma.StringFilter<"Group"> | string
   inviteToken?: Prisma.StringFilter<"Group"> | string
+  createdByUserId?: Prisma.IntNullableFilter<"Group"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Group"> | Date | string
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   members?: Prisma.GroupMemberListRelationFilter
   expenses?: Prisma.ExpenseListRelationFilter
 }
@@ -225,7 +238,9 @@ export type GroupOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   category?: Prisma.SortOrder
   inviteToken?: Prisma.SortOrder
+  createdByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.UserOrderByWithRelationInput
   members?: Prisma.GroupMemberOrderByRelationAggregateInput
   expenses?: Prisma.ExpenseOrderByRelationAggregateInput
 }
@@ -238,7 +253,9 @@ export type GroupWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.GroupWhereInput | Prisma.GroupWhereInput[]
   name?: Prisma.StringFilter<"Group"> | string
   category?: Prisma.StringFilter<"Group"> | string
+  createdByUserId?: Prisma.IntNullableFilter<"Group"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Group"> | Date | string
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   members?: Prisma.GroupMemberListRelationFilter
   expenses?: Prisma.ExpenseListRelationFilter
 }, "id" | "inviteToken">
@@ -248,6 +265,7 @@ export type GroupOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   category?: Prisma.SortOrder
   inviteToken?: Prisma.SortOrder
+  createdByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.GroupCountOrderByAggregateInput
   _avg?: Prisma.GroupAvgOrderByAggregateInput
@@ -264,6 +282,7 @@ export type GroupScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Group"> | string
   category?: Prisma.StringWithAggregatesFilter<"Group"> | string
   inviteToken?: Prisma.StringWithAggregatesFilter<"Group"> | string
+  createdByUserId?: Prisma.IntNullableWithAggregatesFilter<"Group"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Group"> | Date | string
 }
 
@@ -272,6 +291,7 @@ export type GroupCreateInput = {
   category: string
   inviteToken: string
   createdAt?: Date | string
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedGroupsInput
   members?: Prisma.GroupMemberCreateNestedManyWithoutGroupInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutGroupInput
 }
@@ -281,6 +301,7 @@ export type GroupUncheckedCreateInput = {
   name: string
   category: string
   inviteToken: string
+  createdByUserId?: number | null
   createdAt?: Date | string
   members?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutGroupInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutGroupInput
@@ -291,6 +312,7 @@ export type GroupUpdateInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedGroupsNestedInput
   members?: Prisma.GroupMemberUpdateManyWithoutGroupNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutGroupNestedInput
 }
@@ -300,6 +322,7 @@ export type GroupUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
+  createdByUserId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutGroupNestedInput
@@ -310,6 +333,7 @@ export type GroupCreateManyInput = {
   name: string
   category: string
   inviteToken: string
+  createdByUserId?: number | null
   createdAt?: Date | string
 }
 
@@ -325,7 +349,18 @@ export type GroupUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
+  createdByUserId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type GroupListRelationFilter = {
+  every?: Prisma.GroupWhereInput
+  some?: Prisma.GroupWhereInput
+  none?: Prisma.GroupWhereInput
+}
+
+export type GroupOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type GroupCountOrderByAggregateInput = {
@@ -333,11 +368,13 @@ export type GroupCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   category?: Prisma.SortOrder
   inviteToken?: Prisma.SortOrder
+  createdByUserId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type GroupAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  createdByUserId?: Prisma.SortOrder
 }
 
 export type GroupMaxOrderByAggregateInput = {
@@ -345,6 +382,7 @@ export type GroupMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   category?: Prisma.SortOrder
   inviteToken?: Prisma.SortOrder
+  createdByUserId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -353,16 +391,68 @@ export type GroupMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   category?: Prisma.SortOrder
   inviteToken?: Prisma.SortOrder
+  createdByUserId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type GroupSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  createdByUserId?: Prisma.SortOrder
 }
 
 export type GroupScalarRelationFilter = {
   is?: Prisma.GroupWhereInput
   isNot?: Prisma.GroupWhereInput
+}
+
+export type GroupCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.GroupCreateWithoutCreatedByInput, Prisma.GroupUncheckedCreateWithoutCreatedByInput> | Prisma.GroupCreateWithoutCreatedByInput[] | Prisma.GroupUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.GroupCreateOrConnectWithoutCreatedByInput | Prisma.GroupCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.GroupCreateManyCreatedByInputEnvelope
+  connect?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[]
+}
+
+export type GroupUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.GroupCreateWithoutCreatedByInput, Prisma.GroupUncheckedCreateWithoutCreatedByInput> | Prisma.GroupCreateWithoutCreatedByInput[] | Prisma.GroupUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.GroupCreateOrConnectWithoutCreatedByInput | Prisma.GroupCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.GroupCreateManyCreatedByInputEnvelope
+  connect?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[]
+}
+
+export type GroupUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.GroupCreateWithoutCreatedByInput, Prisma.GroupUncheckedCreateWithoutCreatedByInput> | Prisma.GroupCreateWithoutCreatedByInput[] | Prisma.GroupUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.GroupCreateOrConnectWithoutCreatedByInput | Prisma.GroupCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.GroupUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.GroupUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.GroupCreateManyCreatedByInputEnvelope
+  set?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[]
+  disconnect?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[]
+  delete?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[]
+  connect?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[]
+  update?: Prisma.GroupUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.GroupUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.GroupUpdateManyWithWhereWithoutCreatedByInput | Prisma.GroupUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.GroupScalarWhereInput | Prisma.GroupScalarWhereInput[]
+}
+
+export type GroupUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.GroupCreateWithoutCreatedByInput, Prisma.GroupUncheckedCreateWithoutCreatedByInput> | Prisma.GroupCreateWithoutCreatedByInput[] | Prisma.GroupUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.GroupCreateOrConnectWithoutCreatedByInput | Prisma.GroupCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.GroupUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.GroupUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.GroupCreateManyCreatedByInputEnvelope
+  set?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[]
+  disconnect?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[]
+  delete?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[]
+  connect?: Prisma.GroupWhereUniqueInput | Prisma.GroupWhereUniqueInput[]
+  update?: Prisma.GroupUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.GroupUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.GroupUpdateManyWithWhereWithoutCreatedByInput | Prisma.GroupUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.GroupScalarWhereInput | Prisma.GroupScalarWhereInput[]
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type GroupCreateNestedOneWithoutMembersInput = {
@@ -393,11 +483,69 @@ export type GroupUpdateOneRequiredWithoutExpensesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.GroupUpdateToOneWithWhereWithoutExpensesInput, Prisma.GroupUpdateWithoutExpensesInput>, Prisma.GroupUncheckedUpdateWithoutExpensesInput>
 }
 
+export type GroupCreateWithoutCreatedByInput = {
+  name: string
+  category: string
+  inviteToken: string
+  createdAt?: Date | string
+  members?: Prisma.GroupMemberCreateNestedManyWithoutGroupInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutGroupInput
+}
+
+export type GroupUncheckedCreateWithoutCreatedByInput = {
+  id?: number
+  name: string
+  category: string
+  inviteToken: string
+  createdAt?: Date | string
+  members?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutGroupInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutGroupInput
+}
+
+export type GroupCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.GroupWhereUniqueInput
+  create: Prisma.XOR<Prisma.GroupCreateWithoutCreatedByInput, Prisma.GroupUncheckedCreateWithoutCreatedByInput>
+}
+
+export type GroupCreateManyCreatedByInputEnvelope = {
+  data: Prisma.GroupCreateManyCreatedByInput | Prisma.GroupCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type GroupUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.GroupWhereUniqueInput
+  update: Prisma.XOR<Prisma.GroupUpdateWithoutCreatedByInput, Prisma.GroupUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.GroupCreateWithoutCreatedByInput, Prisma.GroupUncheckedCreateWithoutCreatedByInput>
+}
+
+export type GroupUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.GroupWhereUniqueInput
+  data: Prisma.XOR<Prisma.GroupUpdateWithoutCreatedByInput, Prisma.GroupUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type GroupUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.GroupScalarWhereInput
+  data: Prisma.XOR<Prisma.GroupUpdateManyMutationInput, Prisma.GroupUncheckedUpdateManyWithoutCreatedByInput>
+}
+
+export type GroupScalarWhereInput = {
+  AND?: Prisma.GroupScalarWhereInput | Prisma.GroupScalarWhereInput[]
+  OR?: Prisma.GroupScalarWhereInput[]
+  NOT?: Prisma.GroupScalarWhereInput | Prisma.GroupScalarWhereInput[]
+  id?: Prisma.IntFilter<"Group"> | number
+  name?: Prisma.StringFilter<"Group"> | string
+  category?: Prisma.StringFilter<"Group"> | string
+  inviteToken?: Prisma.StringFilter<"Group"> | string
+  createdByUserId?: Prisma.IntNullableFilter<"Group"> | number | null
+  createdAt?: Prisma.DateTimeFilter<"Group"> | Date | string
+}
+
 export type GroupCreateWithoutMembersInput = {
   name: string
   category: string
   inviteToken: string
   createdAt?: Date | string
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedGroupsInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutGroupInput
 }
 
@@ -406,6 +554,7 @@ export type GroupUncheckedCreateWithoutMembersInput = {
   name: string
   category: string
   inviteToken: string
+  createdByUserId?: number | null
   createdAt?: Date | string
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutGroupInput
 }
@@ -431,6 +580,7 @@ export type GroupUpdateWithoutMembersInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedGroupsNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutGroupNestedInput
 }
 
@@ -439,6 +589,7 @@ export type GroupUncheckedUpdateWithoutMembersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
+  createdByUserId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutGroupNestedInput
 }
@@ -448,6 +599,7 @@ export type GroupCreateWithoutExpensesInput = {
   category: string
   inviteToken: string
   createdAt?: Date | string
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedGroupsInput
   members?: Prisma.GroupMemberCreateNestedManyWithoutGroupInput
 }
 
@@ -456,6 +608,7 @@ export type GroupUncheckedCreateWithoutExpensesInput = {
   name: string
   category: string
   inviteToken: string
+  createdByUserId?: number | null
   createdAt?: Date | string
   members?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutGroupInput
 }
@@ -481,6 +634,7 @@ export type GroupUpdateWithoutExpensesInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedGroupsNestedInput
   members?: Prisma.GroupMemberUpdateManyWithoutGroupNestedInput
 }
 
@@ -489,8 +643,44 @@ export type GroupUncheckedUpdateWithoutExpensesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
+  createdByUserId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
+}
+
+export type GroupCreateManyCreatedByInput = {
+  id?: number
+  name: string
+  category: string
+  inviteToken: string
+  createdAt?: Date | string
+}
+
+export type GroupUpdateWithoutCreatedByInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  members?: Prisma.GroupMemberUpdateManyWithoutGroupNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutGroupNestedInput
+}
+
+export type GroupUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  members?: Prisma.GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutGroupNestedInput
+}
+
+export type GroupUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  inviteToken?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -538,7 +728,9 @@ export type GroupSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   name?: boolean
   category?: boolean
   inviteToken?: boolean
+  createdByUserId?: boolean
   createdAt?: boolean
+  createdBy?: boolean | Prisma.Group$createdByArgs<ExtArgs>
   members?: boolean | Prisma.Group$membersArgs<ExtArgs>
   expenses?: boolean | Prisma.Group$expensesArgs<ExtArgs>
   _count?: boolean | Prisma.GroupCountOutputTypeDefaultArgs<ExtArgs>
@@ -549,7 +741,9 @@ export type GroupSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   name?: boolean
   category?: boolean
   inviteToken?: boolean
+  createdByUserId?: boolean
   createdAt?: boolean
+  createdBy?: boolean | Prisma.Group$createdByArgs<ExtArgs>
 }, ExtArgs["result"]["group"]>
 
 export type GroupSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -557,7 +751,9 @@ export type GroupSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   name?: boolean
   category?: boolean
   inviteToken?: boolean
+  createdByUserId?: boolean
   createdAt?: boolean
+  createdBy?: boolean | Prisma.Group$createdByArgs<ExtArgs>
 }, ExtArgs["result"]["group"]>
 
 export type GroupSelectScalar = {
@@ -565,21 +761,28 @@ export type GroupSelectScalar = {
   name?: boolean
   category?: boolean
   inviteToken?: boolean
+  createdByUserId?: boolean
   createdAt?: boolean
 }
 
-export type GroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "category" | "inviteToken" | "createdAt", ExtArgs["result"]["group"]>
+export type GroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "category" | "inviteToken" | "createdByUserId" | "createdAt", ExtArgs["result"]["group"]>
 export type GroupInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  createdBy?: boolean | Prisma.Group$createdByArgs<ExtArgs>
   members?: boolean | Prisma.Group$membersArgs<ExtArgs>
   expenses?: boolean | Prisma.Group$expensesArgs<ExtArgs>
   _count?: boolean | Prisma.GroupCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type GroupIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type GroupIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type GroupIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  createdBy?: boolean | Prisma.Group$createdByArgs<ExtArgs>
+}
+export type GroupIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  createdBy?: boolean | Prisma.Group$createdByArgs<ExtArgs>
+}
 
 export type $GroupPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Group"
   objects: {
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
     members: Prisma.$GroupMemberPayload<ExtArgs>[]
     expenses: Prisma.$ExpensePayload<ExtArgs>[]
   }
@@ -588,6 +791,7 @@ export type $GroupPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     name: string
     category: string
     inviteToken: string
+    createdByUserId: number | null
     createdAt: Date
   }, ExtArgs["result"]["group"]>
   composites: {}
@@ -983,6 +1187,7 @@ readonly fields: GroupFieldRefs;
  */
 export interface Prisma__GroupClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  createdBy<T extends Prisma.Group$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Group$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   members<T extends Prisma.Group$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Group$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   expenses<T extends Prisma.Group$expensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Group$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1018,6 +1223,7 @@ export interface GroupFieldRefs {
   readonly name: Prisma.FieldRef<"Group", 'String'>
   readonly category: Prisma.FieldRef<"Group", 'String'>
   readonly inviteToken: Prisma.FieldRef<"Group", 'String'>
+  readonly createdByUserId: Prisma.FieldRef<"Group", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Group", 'DateTime'>
 }
     
@@ -1273,6 +1479,10 @@ export type GroupCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extension
    */
   data: Prisma.GroupCreateManyInput | Prisma.GroupCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GroupIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1343,6 +1553,10 @@ export type GroupUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many Groups to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GroupIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1409,6 +1623,25 @@ export type GroupDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Groups to delete.
    */
   limit?: number
+}
+
+/**
+ * Group.createdBy
+ */
+export type Group$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

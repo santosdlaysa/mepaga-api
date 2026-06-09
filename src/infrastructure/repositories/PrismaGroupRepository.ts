@@ -5,12 +5,15 @@ import { Group, CreateGroupInput } from "../../domain/entities/Group";
 export class PrismaGroupRepository implements IGroupRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create(input: CreateGroupInput & { inviteToken: string }): Promise<Group> {
+  async create(
+    input: CreateGroupInput & { inviteToken: string; createdByUserId: number }
+  ): Promise<Group> {
     return this.prisma.group.create({
       data: {
         name: input.name,
         category: input.category,
         inviteToken: input.inviteToken,
+        createdByUserId: input.createdByUserId,
       },
     });
   }
@@ -34,5 +37,10 @@ export class PrismaGroupRepository implements IGroupRepository {
       where: { groupId_userId: { groupId, userId } },
     });
     return member !== null;
+  }
+
+  async delete(id: number): Promise<void> {
+    // Membros, despesas e divisões são removidos em cascata (onDelete: Cascade).
+    await this.prisma.group.delete({ where: { id } });
   }
 }
